@@ -1,3 +1,2 @@
-class Test(object):
-    
+class Solution(object):
     pass
