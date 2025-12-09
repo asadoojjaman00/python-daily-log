@@ -1,42 +1,66 @@
 """
+leetcode : 3583. Count Special Triplets(Medium)
 
-A square triple (a,b,c) is a triple where a, b, and c are integers and a2 + b2 = c2.
+You are given an integer array nums.
 
-Given an integer n, return the number of square triples such that 1 <= a, b, c <= n.
+A special triplet is defined as a triplet of indices (i, j, k) such that:
+
+0 <= i < j < k < n, where n = nums.length
+nums[i] == nums[j] * 2
+nums[k] == nums[j] * 2
+Return the total number of special triplets in the array.
+
+Since the answer may be large, return it modulo 109 + 7.
 
  
 
 Example 1:
 
-Input: n = 5
-Output: 2
-Explanation: The square triples are (3,4,5) and (4,3,5).
+Input: nums = [6,3,6]
+
+Output: 1
+
+Explanation:
+
+The only special triplet is (i, j, k) = (0, 1, 2), where:
+
+nums[0] = 6, nums[1] = 3, nums[2] = 6
+nums[0] = nums[1] * 2 = 3 * 2 = 6
+nums[2] = nums[1] * 2 = 3 * 2 = 6
 Example 2:
 
-Input: n = 10
-Output: 4
-Explanation: The square triples are (3,4,5), (4,3,5), (6,8,10), and (8,6,10).
+Input: nums = [0,1,0,0]
+
+Output: 1
+
+Explanation:
+
+The only special triplet is (i, j, k) = (0, 2, 3), where:
+
+nums[0] = 0, nums[2] = 0, nums[3] = 0
+nums[0] = nums[2] * 2 = 0 * 2 = 0
+nums[3] = nums[2] * 2 = 0 * 2 = 0
 
 """
-import math
+
 class Solution(object):
-    def countTriples(self, n):
+    def specialTriplets(self, nums):
         """
-        :type n: int
+        :type nums: List[int]
         :rtype: int
         """
-        
+        n = len(nums)
         count = 0
-        for a in range(1, n+1):
-            for b in range(1, n+1):
 
-                c_square = a*a + b*b
-                c = int(math.sqrt(c_square))
-
-                if c*c == c_square and c<=n:
-                    count +=1
+        for i in range(n):
+            for j in range(i+1, n):
+                for k in range(j+1, n):
+                    cn1 = nums[i] == nums[j] * 2
+                    cn2 = nums[k] == nums[j] * 2
+                    if cn1 and cn2 :
+                        count += 1
         return count
     
 obj = Solution()
-result = obj.countTriples(10)
-print(result)
+fn = obj.specialTriplets([8,4,2,8,4])
+print(fn)
