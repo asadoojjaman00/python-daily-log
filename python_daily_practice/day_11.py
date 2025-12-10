@@ -43,24 +43,33 @@ nums[3] = nums[2] * 2 = 0 * 2 = 0
 
 """
 
+
+# Count Special Triplets
 class Solution(object):
     def specialTriplets(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        n = len(nums)
-        count = 0
+        MOD = 10**9 + 7
+        from collections import defaultdict
 
-        for i in range(n):
-            for j in range(i+1, n):
-                for k in range(j+1, n):
-                    cn1 = nums[i] == nums[j] * 2
-                    cn2 = nums[k] == nums[j] * 2
-                    if cn1 and cn2 :
-                        count += 1
-        return count
-    
+        left = defaultdict(int)
+        right = defaultdict(int)
+
+        for num in nums:
+            right[num] += 1
+
+        ans = 0
+        for j in range(len(nums)):
+            mid = nums[j]
+            double = mid * 2
+
+            right[mid] -= 1
+
+            count_i = left[double]
+            count_k = right[double]
+
+            ans = (ans + count_i * count_k) % MOD
+
+            left[mid] += 1
+        return ans
 obj = Solution()
 fn = obj.specialTriplets([8,4,2,8,4])
 print(fn)
